@@ -6,8 +6,8 @@ public class Client {
     private static final int PORT = 6789;
 
     public static void main(String[] args) {
-        DataInputStream in; //del servidor al cliente
-        DataOutputStream out; //del cliente al servidor
+        BufferedReader in; //del servidor al cliente
+        PrintWriter out; //del cliente al servidor
         
         try {
             Socket socket = new Socket(SERVER_IP, PORT);
@@ -18,20 +18,27 @@ public class Client {
             
             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in)); 
             
+            
             //usando el socket, crear los canales de entrada in y salida out
-             in =new DataInputStream(socket.getInputStream());
-            out =new DataOutputStream(socket.getOutputStream());
+             in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out =new PrintWriter(socket.getOutputStream(),true);
+            
+            String msg;
 
             do {
-                    //solicitar al usuario un alias, o nombre y enviarlo al servidor
-                System.out.println("Escriba el nombre de usuario");
+                
+                //solicitar al usuario un alias, o nombre y enviarlo al servidor
+                msg=in.readLine();
+                System.out.println(msg);
                 
                 //no debe salir de este bloque hasta que el nombre no sea aceptado
                 //al ser aceptado notificar, de lo contrario seguir pidiendo un alias
-                out.writeUTF(userInput.readLine());
+                out.println(userInput.readLine());
     
                 
-            } while (in.readUTF().equals("El nombre de usuario ya existe"));
+            } while (msg.equals("El nombre de usuario ya existe"));
+            System.out.println(in.readLine());
+            socket.close();
             return;
 
             
