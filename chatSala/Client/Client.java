@@ -31,7 +31,7 @@ public class Client {
                 out.writeUTF(userInput.readLine());
     
                 
-            } while (in.readUTF()=="El nombre de usuario ya existe");
+            } while (in.readUTF().equals("El nombre de usuario ya existe"));
             return;
 
             
