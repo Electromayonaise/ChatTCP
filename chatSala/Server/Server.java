@@ -19,10 +19,11 @@ public class Server {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Nuevo cliente conectado: " + clientSocket);
-                
                 //crea el objeto para gestionar al cliente y le envia la informacion necesaria
                 //inicia el hilo para ese cliente
-                
+                ClientHandler clientThread = new ClientHandler(clientSocket,clientes);
+                Thread thread = new Thread(clientThread);
+                thread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
