@@ -53,7 +53,7 @@ public class Client {
                  
             //creamos el objeto Lector e iniciamos el hilo que nos permitira estar atentos a los mensajes
             //que llegan del servidor
-            //inicar el hilo
+            //inicar el hilo 
             Lector lector=new Lector(in);
             Thread theadDeLectura=new Thread(lector);
             try {
@@ -65,6 +65,14 @@ public class Client {
 
 
             //estar atento a la entrada del usuario para poner los mensajes en el canal de salida out
+            //en el hilo principal solo enviamos lo que escriba el usuario
+            String msgFromUser;
+            while(true){
+                msgFromUser=userInput.readLine();
+                out.println(msgFromUser);
+            }
+
+
             
 
         } catch (IOException e) {
