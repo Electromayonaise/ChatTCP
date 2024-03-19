@@ -38,8 +38,8 @@ public class Client {
                 
             } while (msg.equals("El nombre de usuario ya existe"));
             System.out.println(in.readLine());
-            socket.close();
-            return;
+            
+           
 
             
                       
@@ -52,6 +52,14 @@ public class Client {
             //creamos el objeto Lector e iniciamos el hilo que nos permitira estar atentos a los mensajes
             //que llegan del servidor
             //inicar el hilo
+            Lector lector=new Lector(in);
+            Thread theadDeLectura=new Thread(lector);
+            try {
+                theadDeLectura.start();
+            } catch (Exception threadException) {
+                threadException.printStackTrace();
+            }
+            
 
 
             //estar atento a la entrada del usuario para poner los mensajes en el canal de salida out
