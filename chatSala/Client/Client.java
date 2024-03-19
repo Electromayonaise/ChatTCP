@@ -30,14 +30,16 @@ public class Client {
                 //solicitar al usuario un alias, o nombre y enviarlo al servidor
                 msg=in.readLine();
                 System.out.println(msg);
+
                 
                 //no debe salir de este bloque hasta que el nombre no sea aceptado
                 //al ser aceptado notificar, de lo contrario seguir pidiendo un alias
                 out.println(userInput.readLine());
-    
+                msg=in.readLine();
+                System.out.println(msg);
                 
             } while (msg.equals("El nombre de usuario ya existe"));
-            System.out.println(in.readLine());
+          
             
            
 
