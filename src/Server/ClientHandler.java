@@ -4,14 +4,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-// This class handles individual clients, implementing the Runnable interface.
+// Clase que maneja la comunicacion con un cliente
 class ClientHandler implements Runnable {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
     private String clientName;
     private Chatters clientes;
-    private String currentGroup; // Track current group the client is in
+    private String currentGroup; 
 
     public ClientHandler(Socket socket, Chatters clientes) {
         clientSocket = socket;
@@ -40,7 +40,7 @@ class ClientHandler implements Runnable {
                 }
             }
 
-            // Default state is global chat
+            // El estado default del cliente es el chat global
             out.println("Ahora estás en el chat global. ");
             out.println("1. Usa /group [nombre_grupo] para cambiar a un grupo, o /creategroup [nombre_grupo] para crearlo.");
             out.println("2. Usa /msg [nombre_usuario] para enviar un mensaje privado a un usuario.");
@@ -64,17 +64,17 @@ class ClientHandler implements Runnable {
                     break;
                 } else {
                     if (currentGroup == null) {
-                        // Send message to global chat if not in any group
+                        // Mandar mensaje a todos los clientes, si no esta en un grupo
                         clientes.sendToAll(clientName + ": " + message);
                     } else {
-                        // Send message to the current group
+                        // Mandar mensaje a un grupo
                         clientes.sendToGroup(currentGroup, clientName + " (" + currentGroup + "): " + message);
                     }
                 }
             }
 
             if (currentGroup != null) {
-                // Remove from current group if in one
+                // Quitarlo del grupo actual si esta en uno
                 clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
             }
 
@@ -94,11 +94,11 @@ class ClientHandler implements Runnable {
                 out.println("El grupo '" + groupName + "' no existe.");
             } else {
                 if (currentGroup != null) {
-                    // Remove from current group if in one
+                    // Quitarlo del grupo actual si esta en uno, antes de unirse a otro
                     clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
                     out.println("Saliste del grupo '" + currentGroup + "'.");
                 }
-                // Join the new group
+                // Agregarlo al grupo
                 clientes.addUserToGroup(groupName, new Person(clientName, out));
                 currentGroup = groupName;
                 out.println("Ahora estás en el grupo '" + groupName + "'.");
@@ -125,10 +125,10 @@ class ClientHandler implements Runnable {
 
     private void handleExitGroupCommand() {
         if (currentGroup != null) {
-            // Remove from current group if in one
+            // Quitarlo del grupo actual si esta en uno
             clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
             out.println("Has salido del grupo '" + currentGroup + "'.");
-            currentGroup = null; // Set currentGroup to null to indicate being in global chat
+            currentGroup = null; // Setiar el grupo actual a null, para volver al chat global
         } else {
             out.println("No estás en ningún grupo.");
         }
@@ -140,7 +140,7 @@ class ClientHandler implements Runnable {
             String recipient = parts[1];
             String privateMessage = parts[2];
             if (clientes.exists(recipient)) {
-                // Send the private message to the recipient
+                // Enviar mensaje privado
                 clientes.sendPrivateMessage(recipient, clientName, clientName + " (privado): " + privateMessage);
             } else {
                 out.println("El usuario '" + recipient + "' no existe o no está en línea.");
@@ -150,14 +150,14 @@ class ClientHandler implements Runnable {
         }
     }
     
-
+    // aqui cabe aclarar que el handleReply depende de una comunicacion 1 a 1, es decir, que solo se puede usar si se ha recibido un mensaje privado que aun no ha sido respondido
     private void handleReplyCommand(String message) {
-        // Retrieve the last private message sender and message from the current client
+        // Obtener el ultimo mensaje privado y su remitente
         String lastSender = clientes.getLastPrivateMessageSender(clientName);
         String lastMessage = clientes.getLastPrivateMessage(clientName);
         
         if (lastSender != null && message != null) {
-            // Send a private message to the last sender
+            // Mandar mensaje privado al remitente del ultimo mensaje privado recibido por el usuario
             clientes.sendPrivateMessage(lastSender, clientName, clientName + " (respuesta): " + message);
         } else {
             out.println("No hay mensajes privados anteriores para responder.");
