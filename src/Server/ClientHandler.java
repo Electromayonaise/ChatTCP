@@ -41,7 +41,12 @@ class ClientHandler implements Runnable {
             }
 
             // Default state is global chat
-            out.println("Ahora estás en el chat global. Usa /group [nombre_grupo] para cambiar a un grupo.");
+            out.println("Ahora estás en el chat global. ");
+            out.println("1. Usa /group [nombre_grupo] para cambiar a un grupo, o /creategroup [nombre_grupo] para crearlo.");
+            out.println("2. Usa /msg [nombre_usuario] para enviar un mensaje privado a un usuario.");
+            out.println("3. Usa /r para responder a tu ultimo mensaje privado sin necesidad de escribir el nombre de usuario.");
+            out.println("4. Usa /exitgroup para salir del grupo actual y volver al chat global.");
+            out.println("5. Usa /exit para salir del chat.");
 
             while (true) {
                 message = in.readLine();
@@ -49,7 +54,13 @@ class ClientHandler implements Runnable {
                     handleGroupCommand(message);
                 } else if (message.startsWith("/creategroup")) {
                     handleCreateGroupCommand(message);
-                } else if (message.equals("exit")) {
+                } else if (message.equals("/exitgroup")) {
+                    handleExitGroupCommand();
+                }else if (message.startsWith("/msg")) {
+                    handlePrivateMessageCommand(message);
+                } else if (message.startsWith("/r")) {
+                    handleReplyCommand(message);
+                } else if (message.equals("/exit")) {
                     break;
                 } else {
                     if (currentGroup == null) {
@@ -96,7 +107,7 @@ class ClientHandler implements Runnable {
             out.println("Uso: /group [nombre_grupo]");
         }
     }
-    
+
     private void handleCreateGroupCommand(String message) {
         String[] parts = message.split("\\s+", 2);
         if (parts.length == 2) {
@@ -111,5 +122,46 @@ class ClientHandler implements Runnable {
             out.println("Uso: /creategroup [nombre_grupo]");
         }
     }
-}
 
+    private void handleExitGroupCommand() {
+        if (currentGroup != null) {
+            // Remove from current group if in one
+            clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
+            out.println("Has salido del grupo '" + currentGroup + "'.");
+            currentGroup = null; // Set currentGroup to null to indicate being in global chat
+        } else {
+            out.println("No estás en ningún grupo.");
+        }
+    }
+
+    private void handlePrivateMessageCommand(String message) {
+        String[] parts = message.split("\\s+", 3);
+        if (parts.length == 3) {
+            String recipient = parts[1];
+            String privateMessage = parts[2];
+            if (clientes.exists(recipient)) {
+                // Send the private message to the recipient
+                clientes.sendPrivateMessage(recipient, clientName, clientName + " (privado): " + privateMessage);
+            } else {
+                out.println("El usuario '" + recipient + "' no existe o no está en línea.");
+            }
+        } else {
+            out.println("Uso: /msg [nombre_usuario] [mensaje]");
+        }
+    }
+    
+
+    private void handleReplyCommand(String message) {
+        // Retrieve the last private message sender and message from the current client
+        String lastSender = clientes.getLastPrivateMessageSender(clientName);
+        String lastMessage = clientes.getLastPrivateMessage(clientName);
+        
+        if (lastSender != null && message != null) {
+            // Send a private message to the last sender
+            clientes.sendPrivateMessage(lastSender, clientName, clientName + " (respuesta): " + message);
+        } else {
+            out.println("No hay mensajes privados anteriores para responder.");
+        }
+    }
+
+}

@@ -6,6 +6,8 @@ import java.net.Socket;
 public class Person {
     private String name; //nombre de usuario
     PrintWriter out;    //canal para enviarle mensajes a ese usuario
+    private String lastPrivateMessage; //ultimo mensaje privado recibido
+    private String lastPrivateMessageSender; //nombre del usuario que envio el ultimo mensaje privado
 
     public Person(String name, PrintWriter out){
         this.name = name;
@@ -18,6 +20,19 @@ public class Person {
     
     public PrintWriter getOut() {
         return out;
+    }
+
+    public void setLastPrivateMessage(String sender, String message) {
+        this.lastPrivateMessageSender = sender;
+        this.lastPrivateMessage = message;
+    }
+
+    public String getLastPrivateMessageSender() {
+        return lastPrivateMessageSender;
+    }
+
+    public String getLastPrivateMessage() {
+        return lastPrivateMessage;
     }
 
     
