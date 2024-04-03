@@ -54,8 +54,10 @@ public class Chatters {
     }
 
     // metodo para enviar un mensaje a todos los usuarios
-    public void sendToAll(String message) {
-        for (Person p : clientes) {
+    public void sendToAll(String name, String message) {
+        Set<Person> allExceptSelf = new HashSet<>(clientes);
+        allExceptSelf.removeIf(p -> p.getName().equals(name));
+        for (Person p : allExceptSelf) {
             p.getOut().println(message);
         }
     }
