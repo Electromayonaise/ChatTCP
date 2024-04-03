@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 public class Client {
-    private static final String SERVER_IP = "127.0.0.1";
+    private static final String SERVER_IP = "192.168.1.7";
     private static final int PORT = 6789;
 
     public static void main(String[] args) {
@@ -39,17 +39,6 @@ public class Client {
                 System.out.println(msg);
                 
             } while (msg.equals("El nombre de usuario ya existe"));
-          
-            
-           
-
-            
-                      
-            
-            
-
-
-
                  
             //creamos el objeto Lector e iniciamos el hilo que nos permitira estar atentos a los mensajes
             //que llegan del servidor
