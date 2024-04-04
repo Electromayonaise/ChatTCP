@@ -9,7 +9,7 @@ public class AudioRecorderPlayer {
     private static  boolean SIGNED = true; // Muestras firmadas
     private static  boolean BIG_ENDIAN = false; // Little-endian
 
-    public static void record() {
+    public static void main(String[] args) {
         //Iniciar variables y objetos necesarios para definir formato y buffer donde se guardara el audio
         int duration = 5; //cuantos segundos vamos a grabar?
         AudioFormat format = new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
