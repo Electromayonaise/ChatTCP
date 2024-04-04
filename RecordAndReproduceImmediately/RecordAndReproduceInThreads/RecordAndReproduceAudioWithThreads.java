@@ -18,8 +18,12 @@ public class RecordAndReproduceAudioWithThreads {
             Reproducer reproducer=new Reproducer(recorder);
 
             Thread recorderThread= new Thread(recorder);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             Thread reproducerThread= new Thread(reproducer);
+            Thread.sleep(500);
+            recorder.setReproducer(reproducer);
+            
+            
             recorderThread.start();
 
             
