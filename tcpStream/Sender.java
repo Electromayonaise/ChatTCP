@@ -20,6 +20,20 @@ public class Sender {
             dataOutputStream.writeInt(bytesToSend.length); // Send the length first
             dataOutputStream.write(bytesToSend); // Send the bytes
 
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
+            dataOutputStream.write(bytesToSend); // Send the bytes
+
             // Close streams and socket
             dataOutputStream.close();
             socket.close();
