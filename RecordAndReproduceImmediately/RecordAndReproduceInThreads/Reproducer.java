@@ -36,12 +36,17 @@ public class Reproducer implements Runnable{
             speakers.open(format);
             speakers.start();
             while (true) {
-                if(queue.size()>0){
-                    System.out.println("HOLAA");
-                    byte[] byteArray=queue.poll();
+                byte[] byteArray=queue.poll();
+                if(byteArray!=null){
                     speakers.write(byteArray, 0, byteArray.length);
                 }
-                System.out.println("No");
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+               
                 
             }
         } catch (LineUnavailableException e) {

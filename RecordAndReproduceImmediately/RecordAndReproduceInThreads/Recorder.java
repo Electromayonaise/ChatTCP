@@ -49,8 +49,10 @@ public class Recorder implements Runnable{
             line.start();
             while (true) {
                 bytesRead = line.read(buffer, 0, buffer.length);
-                byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                reproducer.addBytesToQueue(bufferCopy);
+                if(bytesRead>0){
+                    byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
+                    reproducer.addBytesToQueue(bufferCopy);
+                }
                
             }
         } catch (LineUnavailableException e) {
