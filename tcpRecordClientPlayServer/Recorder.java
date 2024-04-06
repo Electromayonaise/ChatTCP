@@ -43,8 +43,8 @@ public class Recorder implements Runnable{
                 bytesRead = line.read(buffer, 0, buffer.length);
                 if(bytesRead>0){
                     byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                    dos.writeInt(bufferCopy.length);
-                    dos.write(bufferCopy);
+                    dos.writeInt(bytesRead);
+                    dos.write(buffer,0,bytesRead);
                 }
                 Thread.sleep(1);
                
