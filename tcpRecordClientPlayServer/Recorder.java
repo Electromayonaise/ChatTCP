@@ -19,8 +19,8 @@ public class Recorder implements Runnable{
     private DataOutputStream dos;
     
     
-    public Recorder(DataOutputStream dos) {
-        format = new AudioFormat(44100, 16, 2, true, true);
+    public Recorder(DataOutputStream dos,AudioFormat format ) {
+        this.format=format;
         info = new DataLine.Info(TargetDataLine.class, format);
         buffer=new byte[4096];
         this.dos=dos;
