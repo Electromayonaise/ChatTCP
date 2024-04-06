@@ -1,4 +1,4 @@
-package tcpRecordClientPlayServer;
+package tcpVoiceNoteClientPlayServer;
 
 import java.io.DataOutputStream;
 import java.util.Arrays;
@@ -17,13 +17,16 @@ public class Recorder implements Runnable{
     private int bytesRead;
     private byte[] buffer;
     private DataOutputStream dos;
+    private int duration;
     
     
-    public Recorder(DataOutputStream dos) {
+    
+    public Recorder(DataOutputStream dos, int duration) {
         format = new AudioFormat(44100, 16, 2, true, true);
         info = new DataLine.Info(TargetDataLine.class, format);
         buffer=new byte[4096];
         this.dos=dos;
+        this.duration=duration;
         try {
             line = (TargetDataLine) AudioSystem.getLine(info);
         } catch (LineUnavailableException e) {
@@ -31,6 +34,7 @@ public class Recorder implements Runnable{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
     }
     
     
@@ -39,7 +43,8 @@ public class Recorder implements Runnable{
         try {
             line.open(format);
             line.start();
-            while (true) {
+            long startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() - startTime < TimeUnit.SECONDS.toMillis(duration)) {
                 bytesRead = line.read(buffer, 0, buffer.length);
                 if(bytesRead>0){
                     byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
