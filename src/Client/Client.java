@@ -4,12 +4,12 @@ import java.net.*;
 public class Client {
     private static final String SERVER_IP = "localhost";
     private static final int PORT = 6789;
-    private static final AudioRecorderPlayer recorder=new AudioRecorderPlayer();
+    
 
     public static void main(String[] args) {
         BufferedReader in; //del servidor al cliente
         PrintWriter out; //del cliente al servidor
-        recorder.record();
+        
         
         try {
             Socket socket = new Socket(SERVER_IP, PORT);
