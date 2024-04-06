@@ -23,12 +23,14 @@ public class Call implements Runnable{
                 int availableBytesFromClient1 = client1Dis.available();
                 /*Recibe del client 1 y envio a client1 para probar de momento */
                 if(availableBytesFromClient1>0){
+                    System.out.println("recibo del client 1");
                     int length = client1Dis.readInt();
                     byte[] receivedBytes = new byte[length];
                     client1Dis.readFully(receivedBytes);
                     client1Dos.writeInt(receivedBytes.length);
                     client1Dos.write(receivedBytes,0,receivedBytes.length);
                 }
+                System.out.println("no recibo nada del client 1");
                 /* 
                 int availableBytesFromClient2 = client2Dis.available();
                 /*Recibo del client2 y envio a client 1 
@@ -43,6 +45,7 @@ public class Call implements Runnable{
 
 
             } catch (IOException e) {
+                e.printStackTrace();
                 // TODO Auto-generated catch block
                 break;
             }

@@ -63,14 +63,23 @@ public class Client {
             } catch (Exception threadException) {
                 threadException.printStackTrace();
             }
+           
             /*NUEVO */
             din=new DataInputStream(socket.getInputStream());
             dos=new DataOutputStream(socket.getOutputStream());
-            audioManager=new AudioManager(din, dos); 
             
-            audioManager.initPlayer();
-            audioManager.initRecorder();
+            audioManager=new AudioManager(din, dos); 
+           /*Problema: al momento de empezar a registrar el audio 
+           /* y se envian esos bits, el servidor no puede diferencia
+           si los bits que le llegan son de audio o son de texto.
+
+           Entonces toca crear otro socket que me de otro stream exclusivo para llaamdas
+           luego otro exclusivo para mensajes de audio
+           // audioManager.initPlayer();
+            
+          //  audioManager.initRecorder();
             /*----- */
+            System.out.println("Audio iniciado");
             
 
 

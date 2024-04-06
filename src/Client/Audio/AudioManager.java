@@ -28,37 +28,24 @@ public class AudioManager {
         this.din=din;
         this.don=don;
         this.player=new Player(din,format);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
         this.recorder=new Recorder(don,format);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
         this.voiceNoteRecorder=new VoiceNoteRecorder(don, 0,format);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
     }
     public boolean initRecorder(){
-        if(recordThread==null||!recordThread.isAlive()){
+        if(recordThread!=null&&recordThread.isAlive()){
+            System.out.println("NO INICIE RECORDER");
             return false;
         }
         recordThread=new Thread(recorder);
         recordThread.start();
+        System.out.println("INICIE RECORDER");
         return true;
     }
     public boolean initVoiceNoteRecorder(int duration){
-        if(recordThread==null||!recordThread.isAlive()){
+        if(recordThread!=null&&recordThread.isAlive()){
             return false;
         }
         voiceNoteRecorder.setDuration(duration);
@@ -67,7 +54,7 @@ public class AudioManager {
         return true;
     }
     public boolean initPlayer(){
-        if(playerThread==null ||!playerThread.isAlive()){
+        if(playerThread!=null &&!playerThread.isAlive()){
             return false;
         }
         playerThread=new Thread(player);

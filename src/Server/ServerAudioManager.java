@@ -25,6 +25,7 @@ public class ServerAudioManager {
     public boolean addCall(String name1, String name2){
         Person person1=chatters.getPerson(name1);
         Person person2=chatters.getPerson(name2);
+        System.out.println("LINEA 28");
         if(person1==null){
             System.out.println("person1 no esta"+person1);
             return false;
@@ -33,6 +34,7 @@ public class ServerAudioManager {
             System.out.println("person2 no esta"+person2);
             return false;
         }
+        System.out.println("linea 36");
         Call call=new Call(person1.getDis(), person2.getDis(), person1.getDos(), person2.getDos());
         Thread threadCall=new Thread(call);
         threadCall.start();
