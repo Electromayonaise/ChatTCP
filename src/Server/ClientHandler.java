@@ -69,7 +69,11 @@ class ClientHandler implements Runnable {
             out.println("3. Usa /r para responder a tu ultimo mensaje privado sin necesidad de escribir el nombre de usuario.");
             out.println("4. Usa /exitgroup para salir del grupo actual y volver al chat global.");
             out.println("5. Usa /exit para salir del chat.");
-
+            out.println("6. Usa /voicenote [duracion] [nombre_usuario] para enviar una nota de voz a un usuario");
+            out.println("7. Usa /gvoicenote [duracion]  para enviar una nota de voz al grupo actual");
+            out.println("8. Usa /call [nombre_usuario]  para iniciar una llamada con un usuario");
+            out.println("9. Usa /gcall  para iniciar una llamada con el grupo actual");
+            out.println("9. Usa /endcall para finalizar la llamada actual");
             while (true) {
                 message = in.readLine();
                 if (message.startsWith("/group")) {
