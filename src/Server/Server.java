@@ -11,6 +11,7 @@ public class Server {
 
         int PORT = 6789;
         Chatters clientes = new Chatters(); //lista de clientes
+        ServerAudioManager serverAudioManager= new ServerAudioManager(clientes);
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
@@ -21,7 +22,7 @@ public class Server {
                 System.out.println("Nuevo cliente conectado: " + clientSocket);
                 //crea el objeto para gestionar al cliente y le envia la informacion necesaria
                 //inicia el hilo para ese cliente
-                ClientHandler clientThread = new ClientHandler(clientSocket,clientes);
+                ClientHandler clientThread = new ClientHandler(clientSocket,clientes,serverAudioManager);
                 Thread thread = new Thread(clientThread);
                 thread.start();
             }

@@ -18,7 +18,11 @@ public class VoiceNoteRecorder implements Runnable{
     private byte[] buffer;
     private DataOutputStream dos;
     private int duration;
-    
+    /*ESTO PROBABLEMENTE TOQUE CAMBIARLO
+     * PORQUE primero se deberían registrar todo el audio
+     * y ya luego enviarlo, no enviar a medida de que se lee
+     * o bueno tambien se podría así pero no sería lo optimo. 
+     */
     
     
     public VoiceNoteRecorder(DataOutputStream dos, int duration, AudioFormat format) {

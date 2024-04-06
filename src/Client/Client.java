@@ -67,7 +67,10 @@ public class Client {
             din=new DataInputStream(socket.getInputStream());
             dos=new DataOutputStream(socket.getOutputStream());
             audioManager=new AudioManager(din, dos); 
-            /*NUEVO */
+            
+            audioManager.initPlayer();
+            audioManager.initRecorder();
+            /*----- */
             
 
 

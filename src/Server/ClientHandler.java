@@ -37,10 +37,13 @@ class ClientHandler implements Runnable {
     /* EXTRA PARA AUDIO*/
     private DataInputStream din;
     private DataOutputStream don;
+    private ServerAudioManager serverAudioManager;
+    
 
-    public ClientHandler(Socket socket, Chatters clientes) {
+    public ClientHandler(Socket socket, Chatters clientes, ServerAudioManager serverAudioManager) {
         clientSocket = socket;
         this.clientes = clientes;
+        this.serverAudioManager=serverAudioManager;
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -352,12 +355,14 @@ class ClientHandler implements Runnable {
     private void handleCall(String message){
         String[] parts = message.split("\\s+", 2);
         String targetUser=parts[1];
-        out.println("Llamada dirigida a "+targetUser+" iniciada");
-        Person person=clientes.getPerson(targetUser);
-        if(person==null){
-            out.println("Usuario no encontrado");
-            return;
+        
+        boolean flag=serverAudioManager.addCall(clientName,targetUser);
+        if(flag){
+            out.println("Llamada dirigida a "+targetUser+" iniciada");
+        }else{
+            out.println("Llamada no iniciada, algo fallo");
         }
+        
 
         
 

@@ -1,9 +1,10 @@
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServerAudioManager {
-    // Private static instance variable
-    private static ServerAudioManager instance;
+    
+    private Chatters chatters;
 
     private List<Thread> currentCalls;
     /*AHORA se debe crear un objeto llamada que
@@ -16,18 +17,27 @@ public class ServerAudioManager {
      * esto lo p
      */
 
-    // Private constructor to prevent instantiation from outside
-    private ServerAudioManager() {
-        // Initialization code here
+    public ServerAudioManager(Chatters chatters) {
+        this.chatters=chatters;
+        this.currentCalls=new ArrayList<>();
     }
 
-    // Public static method to get the singleton instance
-    public static ServerAudioManager getInstance() {
-        // Lazy initialization: create the instance when it's accessed for the first time
-        if (instance == null) {
-            instance = new ServerAudioManager();
+    public boolean addCall(String name1, String name2){
+        Person person1=chatters.getPerson(name1);
+        Person person2=chatters.getPerson(name2);
+        if(person1==null){
+            System.out.println("person1 no esta"+person1);
+            return false;
         }
-        return instance;
+        if(person2==null){
+            System.out.println("person2 no esta"+person2);
+            return false;
+        }
+        Call call=new Call(person1.getDis(), person2.getDis(), person1.getDos(), person2.getDos());
+        Thread threadCall=new Thread(call);
+        threadCall.start();
+        currentCalls.add(threadCall);
+        return true;
     }
     
 

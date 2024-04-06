@@ -11,8 +11,8 @@ public class Person {
     private String lastPrivateMessage; //ultimo mensaje privado recibido
     private String lastPrivateMessageSender; //nombre del usuario que envio el ultimo mensaje privado
     /*Nuevo */
-    private DataOutputStream don; //Canal para enviar audios
-    private DataInputStream din; //canal para recibir audios
+    private DataOutputStream dos; //Canal para enviar audios
+    private DataInputStream dis; //canal para recibir audios
     
 
     public Person(String name, PrintWriter out,DataOutputStream don, DataInputStream din){
@@ -39,6 +39,12 @@ public class Person {
 
     public String getLastPrivateMessage() {
         return lastPrivateMessage;
+    }
+    public DataInputStream getDis(){
+        return dis;
+    }
+    public DataOutputStream getDos(){
+        return dos;
     }
 
     
