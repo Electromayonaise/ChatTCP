@@ -15,12 +15,12 @@ public class RecordAndReproduceAudioWithThreads {
     public static void main(String[] args) {
         try {
             Recorder recorder=new Recorder();
-            Reproducer reproducer=new Reproducer(recorder);
+            Reproducer reproducer=new Reproducer();
 
             Thread recorderThread= new Thread(recorder);
-            Thread.sleep(500);
+           
             Thread reproducerThread= new Thread(reproducer);
-            Thread.sleep(500);
+            
             recorder.setReproducer(reproducer);
             
             
