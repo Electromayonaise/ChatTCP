@@ -144,6 +144,7 @@ public class Chatters {
         Person person=null;
         for (Person p : clientes) {
             if (p.getName().equals(name)) {
+                person=p;
                 return person;
             }
         }

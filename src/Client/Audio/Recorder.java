@@ -45,6 +45,7 @@ public class Recorder implements Runnable{
                     byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
                     dos.writeInt(bufferCopy.length);
                     dos.write(bufferCopy);
+                    System.out.println(bufferCopy);
                 }
                 Thread.sleep(1);
                

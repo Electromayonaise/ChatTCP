@@ -15,9 +15,11 @@ public class Person {
     private DataInputStream dis; //canal para recibir audios
     
 
-    public Person(String name, PrintWriter out,DataOutputStream don, DataInputStream din){
+    public Person(String name, PrintWriter out,DataOutputStream dos, DataInputStream dis){
         this.name = name;
         this.out  = out;
+        this.dos =dos;
+        this.dis=dis;
     }
    
     public String getName() {
