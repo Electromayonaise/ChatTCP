@@ -3,6 +3,8 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -32,6 +34,10 @@ class ClientHandler implements Runnable {
     private BufferedInputStream bufferedInputStream;
     private ByteArrayOutputStream byteOutputStream;
 
+    /* EXTRA PARA AUDIO*/
+    private DataInputStream din;
+    private DataOutputStream don;
+
     public ClientHandler(Socket socket, Chatters clientes) {
         clientSocket = socket;
         this.clientes = clientes;
@@ -41,6 +47,10 @@ class ClientHandler implements Runnable {
             bufferedOutputStream = new BufferedOutputStream(clientSocket.getOutputStream());
             bufferedInputStream = new BufferedInputStream(clientSocket.getInputStream());
             byteOutputStream = new ByteArrayOutputStream();
+            
+            /*Extra para llamadas */
+            din= new DataInputStream(clientSocket.getInputStream());
+            don= new DataOutputStream(clientSocket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }

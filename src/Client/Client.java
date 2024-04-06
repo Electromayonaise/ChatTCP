@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
 
+import Audio.AudioManager;
+
 public class Client {
     private static final String SERVER_IP = "localhost";
     private static final int PORT = 6789;
@@ -9,6 +11,10 @@ public class Client {
     public static void main(String[] args) {
         BufferedReader in; //del servidor al cliente
         PrintWriter out; //del cliente al servidor
+        /*NUEVO AUDIO */
+        DataInputStream din; //del servidor al cliente
+        DataOutputStream dos;
+        AudioManager audioManager;
         
         
         try {
@@ -18,12 +24,18 @@ public class Client {
             String message;
             //canal de entrada para el usuario
             
-            BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in)); 
+            BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+
+            
             
             
             //usando el socket, crear los canales de entrada in y salida out
-             in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out =new PrintWriter(socket.getOutputStream(),true);
+
+            din=new DataInputStream(socket.getInputStream());
+            dos=new DataOutputStream(socket.getOutputStream());
+            audioManager=new AudioManager(din, dos);
             
             String msg;
 
