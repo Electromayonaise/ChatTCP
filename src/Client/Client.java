@@ -33,9 +33,7 @@ public class Client {
             in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out =new PrintWriter(socket.getOutputStream(),true);
 
-            din=new DataInputStream(socket.getInputStream());
-            dos=new DataOutputStream(socket.getOutputStream());
-            audioManager=new AudioManager(din, dos);
+            
             
             String msg;
 
@@ -56,7 +54,8 @@ public class Client {
                  
             //creamos el objeto Lector e iniciamos el hilo que nos permitira estar atentos a los mensajes
             //que llegan del servidor
-            //inicar el hilo 
+            //inicar el hilo
+            
             Lector lector=new Lector(in);
             Thread theadDeLectura=new Thread(lector);
             try {
@@ -64,6 +63,11 @@ public class Client {
             } catch (Exception threadException) {
                 threadException.printStackTrace();
             }
+            /*NUEVO */
+            din=new DataInputStream(socket.getInputStream());
+            dos=new DataOutputStream(socket.getOutputStream());
+            audioManager=new AudioManager(din, dos); 
+            /*NUEVO */
             
 
 

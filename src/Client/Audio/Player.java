@@ -17,8 +17,8 @@ public class Player implements Runnable{
 
     private DataInputStream dis;
     
-    Player(DataInputStream dis){
-        format = new AudioFormat(44100, 16, 2, true, true);
+    Player(DataInputStream dis,AudioFormat format){
+        this.format=format;
         this.dis=dis;
         queue=new LinkedList<>();
         try {

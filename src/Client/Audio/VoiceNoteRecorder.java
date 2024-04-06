@@ -21,8 +21,8 @@ public class VoiceNoteRecorder implements Runnable{
     
     
     
-    public VoiceNoteRecorder(DataOutputStream dos, int duration) {
-        format = new AudioFormat(44100, 16, 2, true, true);
+    public VoiceNoteRecorder(DataOutputStream dos, int duration, AudioFormat format) {
+        this.format=format;
         info = new DataLine.Info(TargetDataLine.class, format);
         buffer=new byte[4096];
         this.dos=dos;
@@ -34,8 +34,11 @@ public class VoiceNoteRecorder implements Runnable{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
+    public void setDuration(int duration){
+        this.duration=duration;
+    }
+
     
     
 
