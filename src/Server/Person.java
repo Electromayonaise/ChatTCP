@@ -1,4 +1,6 @@
 import java.util.Set;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -8,8 +10,11 @@ public class Person {
     PrintWriter out;    //canal para enviarle mensajes a ese usuario
     private String lastPrivateMessage; //ultimo mensaje privado recibido
     private String lastPrivateMessageSender; //nombre del usuario que envio el ultimo mensaje privado
+    /*Nuevo */
+    private DataOutputStream don; //Canal para enviar audios
+    
 
-    public Person(String name, PrintWriter out){
+    public Person(String name, PrintWriter out,DataOutputStream don){
         this.name = name;
         this.out  = out;
     }

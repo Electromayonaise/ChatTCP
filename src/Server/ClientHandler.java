@@ -47,7 +47,7 @@ class ClientHandler implements Runnable {
             bufferedOutputStream = new BufferedOutputStream(clientSocket.getOutputStream());
             bufferedInputStream = new BufferedInputStream(clientSocket.getInputStream());
             byteOutputStream = new ByteArrayOutputStream();
-            
+
             /*Extra para llamadas */
             din= new DataInputStream(clientSocket.getInputStream());
             don= new DataOutputStream(clientSocket.getOutputStream());
@@ -63,7 +63,7 @@ class ClientHandler implements Runnable {
             while (true) {
                 out.println("Ingrese su nombre de usuario");
                 clientName = in.readLine();
-                if (clientes.add(clientName, out)) {
+                if (clientes.add(clientName, out,don)) {
                     out.println("Bienvenido " + clientName);
                     clientes.sendToAll("System", clientName + " se ha unido al chat");
                     break;
@@ -122,7 +122,7 @@ class ClientHandler implements Runnable {
 
             if (currentGroup != null) {
                 // Quitarlo del grupo actual si esta en uno
-                clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
+                clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
             }
 
             clientes.remove(clientName);
@@ -142,11 +142,11 @@ class ClientHandler implements Runnable {
             } else {
                 if (currentGroup != null) {
                     // Quitarlo del grupo actual si esta en uno, antes de unirse a otro
-                    clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
+                    clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
                     out.println("Saliste del grupo '" + currentGroup + "'.");
                 }
                 // Agregarlo al grupo
-                clientes.addUserToGroup(groupName, new Person(clientName, out));
+                clientes.addUserToGroup(groupName, new Person(clientName, out,don));
                 currentGroup = groupName;
                 out.println("Ahora estás en el grupo '" + groupName + "'.");
             }
@@ -173,7 +173,7 @@ class ClientHandler implements Runnable {
     private void handleExitGroupCommand() {
         if (currentGroup != null) {
             // Quitarlo del grupo actual si esta en uno
-            clientes.removeUserFromGroup(currentGroup, new Person(clientName, out));
+            clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
             out.println("Has salido del grupo '" + currentGroup + "'.");
             currentGroup = null; // Setiar el grupo actual a null, para volver al chat global
         } else {
