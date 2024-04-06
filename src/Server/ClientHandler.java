@@ -72,8 +72,8 @@ class ClientHandler implements Runnable {
             out.println("6. Usa /voicenote [duracion] [nombre_usuario] para enviar una nota de voz a un usuario");
             out.println("7. Usa /gvoicenote [duracion]  para enviar una nota de voz al grupo actual");
             out.println("8. Usa /call [nombre_usuario]  para iniciar una llamada con un usuario");
-            out.println("9. Usa /gcall  para iniciar una llamada con el grupo actual");
-            out.println("9. Usa /endcall para finalizar la llamada actual");
+            out.println("9. Usa /gcall  para unirse una llamada con el grupo actual");
+            out.println("10. Usa /endcall para finalizar la llamada actual");
             while (true) {
                 message = in.readLine();
                 if (message.startsWith("/group")) {
@@ -86,9 +86,18 @@ class ClientHandler implements Runnable {
                     handlePrivateMessageCommand(message);
                 } else if (message.startsWith("/r")) {
                     handleReplyCommand(message);
-                } else if (message.equals("/audio")) {
-                    handleAudioCommand();
-                } else if (message.equals("/exit")) {
+                } else if (message.startsWith("/voicenote")) {
+                    handleVoiceNote(message);
+                } else if(message.startsWith("/gvoicenote")){
+                    handleGrupalVoiceNote(message);
+                }else if(message.startsWith("/call")){
+                    handleCall(message);
+                }else if(message.startsWith("/gcall")){
+                    handleGrupalCall();
+                }else if(message.startsWith("/endcall")){
+                    handleEndCall();
+                }
+                else if (message.equals("/exit")) {
                     break;
                 } else {
                     if (currentGroup == null) {
@@ -258,6 +267,7 @@ class ClientHandler implements Runnable {
             out.println("Error occurred while sending audio data.");
         }
     }
+    
 
     private void handlePlayCommand() {
         try {
@@ -300,6 +310,43 @@ class ClientHandler implements Runnable {
             e.printStackTrace();
             out.println("Error occurred while playing audio.");
         }
+    }
+    /*PARTE NUEVA NUEVA NUEVA */
+    /*posibles erorres, numeros negativos, y falta de  */
+    private void handleVoiceNote(String message){
+        try {
+            String[] parts = message.split("\\s+", 3);
+            int duration=Integer.parseInt(parts[1]);
+            String targetUser=parts[2];
+            out.println("Nota de voz dirigida a "+targetUser+" iniciada."+"Tiene una duracion de "+ duration+" segundos");
+            
+        } catch (IndexOutOfBoundsException e) {
+            out.println("ERROR en los argumentos del comando");
+        } catch (NumberFormatException e){
+            out.println("ERROR: La duracion no es valida");
+        }
+        
+    }
+
+    private void handleGrupalVoiceNote(String message){
+        String[] parts = message.split("\\s+", 2);
+        int duration=Integer.parseInt(parts[1]);
+        out.println("Nota de voz con una duracion de "+duration+" iniciada");
+        
+    }
+
+    private void handleCall(String message){
+        String[] parts = message.split("\\s+", 2);
+        String targetUser=parts[1];
+        out.println("Llamada dirigida a "+targetUser+" iniciada");
+
+    }
+    private void handleGrupalCall(){
+        out.println("Llamada grupal iniciada");
+        
+    }
+    private void handleEndCall(){
+        out.println("llamada actual finalizada");
     }
 
 }
