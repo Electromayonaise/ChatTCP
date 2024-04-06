@@ -1,5 +1,6 @@
-package RecordAndReproduceImmediately.RecordAndReproduceInThreads;
+package tcpRecordClientPlayServer;
 
+import java.io.DataOutputStream;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -15,16 +16,14 @@ public class Recorder implements Runnable{
     private TargetDataLine line;
     private int bytesRead;
     private byte[] buffer;
-    private Reproducer reproducer;
-   
+    private DataOutputStream dos;
     
     
-    public Recorder() {
+    public Recorder(DataOutputStream dos) {
         format = new AudioFormat(44100, 16, 2, true, true);
         info = new DataLine.Info(TargetDataLine.class, format);
         buffer=new byte[4096];
-        reproducer=null;
-        
+        this.dos=dos;
         try {
             line = (TargetDataLine) AudioSystem.getLine(info);
         } catch (LineUnavailableException e) {
@@ -33,9 +32,7 @@ public class Recorder implements Runnable{
             e.printStackTrace();
         }
     }
-    public void setReproducer(Reproducer reproducer){
-        this.reproducer=reproducer;
-    }
+    
     public synchronized byte[] getBuffer(){
         return buffer;
     }
@@ -51,7 +48,8 @@ public class Recorder implements Runnable{
                 bytesRead = line.read(buffer, 0, buffer.length);
                 if(bytesRead>0){
                     byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                    reproducer.addBytesToQueue(bufferCopy);
+                    dos.writeInt(bufferCopy.length);
+                    dos.write(bufferCopy);
                 }
                 Thread.sleep(1);
                

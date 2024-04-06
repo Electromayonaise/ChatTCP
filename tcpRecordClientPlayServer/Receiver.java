@@ -18,33 +18,13 @@ public class Receiver {
             // Get the input stream of the socket
             InputStream inputStream = socket.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);
-            while (1==1){
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                // Check if there is data available to read
-                int availableBytes = dataInputStream.available();
-                System.out.println("Available bytes to read: " + availableBytes);
+            
+            Reproducer reproducer =new Reproducer(dataInputStream);
+            
+            Thread playerThread= new Thread(reproducer);
+            playerThread.start();
 
-                // Receive bytes if available
-                if (availableBytes > 0) {
-                    int length = dataInputStream.readInt(); // Read the length first
-                    byte[] receivedBytes = new byte[length];
-                    dataInputStream.readFully(receivedBytes); // Read the bytes
-
-                    // Print received bytes
-                    System.out.println("Received bytes:");
-                    for (byte b : receivedBytes) {
-                        System.out.print((char) b + " "); // Convert bytes to characters
-                    }
-                    System.out.println();
-                } else {
-                    System.out.println("No data available to read.");
-                }
-            }
+            
 
       /*       // Close streams and socket
             dataInputStream.close();

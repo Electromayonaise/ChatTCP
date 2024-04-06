@@ -14,29 +14,15 @@ public class Sender {
             // Get the output stream of the socket
             OutputStream outputStream = socket.getOutputStream();
             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            Recorder recorder=new Recorder(dataOutputStream);
+            
+            Thread recorderThread= new Thread(recorder);
+            recorderThread.start();
 
-            // Send bytes
-            byte[] bytesToSend = {65, 66, 67}; // ASCII values for 'A', 'B', 'C'
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-            dataOutputStream.writeInt(bytesToSend.length); // Send the length first
-            dataOutputStream.write(bytesToSend); // Send the bytes
-
-            // Close streams and socket
+            /*  Close streams and socket
             dataOutputStream.close();
             socket.close();
+            */
 
             System.out.println("Bytes sent successfully.");
         } catch (IOException e) {

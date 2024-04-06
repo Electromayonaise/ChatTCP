@@ -1,5 +1,6 @@
 package tcpRecordClientPlayServer;
 
+import java.io.DataInputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,10 +14,12 @@ public class Reproducer implements Runnable{
     private SourceDataLine speakers;
     
     private Queue<byte[]> queue;
+
+    private DataInputStream dis;
     
-    Reproducer(){
+    Reproducer(DataInputStream dis){
         format = new AudioFormat(44100, 16, 2, true, true);
-        
+        this.dis=dis;
         queue=new LinkedList<>();
         try {
             speakers = AudioSystem.getSourceDataLine(format);
@@ -36,9 +39,15 @@ public class Reproducer implements Runnable{
             speakers.open(format);
             speakers.start();
             while (true) {
-                byte[] byteArray=queue.poll();
-                if(byteArray!=null){
-                    speakers.write(byteArray, 0, byteArray.length);
+                
+                int availableBytes = dis.available();
+
+                if (availableBytes > 0) {
+                    int length = dis.readInt(); // Read the length first
+                    byte[] receivedBytes = new byte[length];
+                    dis.readFully(receivedBytes); // Read the bytes
+                    speakers.write(receivedBytes,0,receivedBytes.length);
+
                 }
                 try {
                     Thread.sleep(1);
@@ -49,9 +58,10 @@ public class Reproducer implements Runnable{
                
                 
             }
-        } catch (LineUnavailableException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            
         }
         
     }
