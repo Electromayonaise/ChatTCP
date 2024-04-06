@@ -63,7 +63,7 @@ class ClientHandler implements Runnable {
             while (true) {
                 out.println("Ingrese su nombre de usuario");
                 clientName = in.readLine();
-                if (clientes.add(clientName, out,don)) {
+                if (clientes.add(clientName, out,don,din)) {
                     out.println("Bienvenido " + clientName);
                     clientes.sendToAll("System", clientName + " se ha unido al chat");
                     break;
@@ -122,7 +122,7 @@ class ClientHandler implements Runnable {
 
             if (currentGroup != null) {
                 // Quitarlo del grupo actual si esta en uno
-                clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
+                clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don,din));
             }
 
             clientes.remove(clientName);
@@ -142,11 +142,11 @@ class ClientHandler implements Runnable {
             } else {
                 if (currentGroup != null) {
                     // Quitarlo del grupo actual si esta en uno, antes de unirse a otro
-                    clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
+                    clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don,din));
                     out.println("Saliste del grupo '" + currentGroup + "'.");
                 }
                 // Agregarlo al grupo
-                clientes.addUserToGroup(groupName, new Person(clientName, out,don));
+                clientes.addUserToGroup(groupName, new Person(clientName, out,don,din));
                 currentGroup = groupName;
                 out.println("Ahora estás en el grupo '" + groupName + "'.");
             }
@@ -173,7 +173,7 @@ class ClientHandler implements Runnable {
     private void handleExitGroupCommand() {
         if (currentGroup != null) {
             // Quitarlo del grupo actual si esta en uno
-            clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don));
+            clientes.removeUserFromGroup(currentGroup, new Person(clientName, out,don,din));
             out.println("Has salido del grupo '" + currentGroup + "'.");
             currentGroup = null; // Setiar el grupo actual a null, para volver al chat global
         } else {
@@ -321,8 +321,12 @@ class ClientHandler implements Runnable {
             out.println("Error occurred while playing audio.");
         }
     }
+
+
+
+
     /*PARTE NUEVA NUEVA NUEVA */
-    /*posibles erorres, numeros negativos, y falta de  */
+    /*posibles erorres, numeros negativos */
     private void handleVoiceNote(String message){
         try {
             String[] parts = message.split("\\s+", 3);
@@ -349,7 +353,14 @@ class ClientHandler implements Runnable {
         String[] parts = message.split("\\s+", 2);
         String targetUser=parts[1];
         out.println("Llamada dirigida a "+targetUser+" iniciada");
+        Person person=clientes.getPerson(targetUser);
+        if(person==null){
+            out.println("Usuario no encontrado");
+            return;
+        }
+
         
+
 
     }
     private void handleGrupalCall(){

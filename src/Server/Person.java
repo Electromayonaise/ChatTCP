@@ -12,9 +12,10 @@ public class Person {
     private String lastPrivateMessageSender; //nombre del usuario que envio el ultimo mensaje privado
     /*Nuevo */
     private DataOutputStream don; //Canal para enviar audios
+    private DataInputStream din; //canal para recibir audios
     
 
-    public Person(String name, PrintWriter out,DataOutputStream don){
+    public Person(String name, PrintWriter out,DataOutputStream don, DataInputStream din){
         this.name = name;
         this.out  = out;
     }

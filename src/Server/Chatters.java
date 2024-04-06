@@ -1,4 +1,5 @@
 import java.util.Set;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -36,9 +37,9 @@ public class Chatters {
     }
 
     // metodo para agregar un usuario nuevo
-    public boolean add(String name, PrintWriter out,DataOutputStream don) {
+    public boolean add(String name, PrintWriter out,DataOutputStream don,DataInputStream din) {
         if (!exists(name)) {
-            clientes.add(new Person(name, out,don));
+            clientes.add(new Person(name, out,don,din));
             return true;
         }
         return false;
@@ -136,6 +137,17 @@ public class Chatters {
             }
         }
         return null;
+    }
+
+    /*EXTRA */
+    public Person getPerson(String name) {
+        Person person=null;
+        for (Person p : clientes) {
+            if (p.getName().equals(name)) {
+                return person;
+            }
+        }
+        return person;
     }
 
 }
