@@ -1,4 +1,4 @@
-package RecordAndReproduceImmediately.RecordAndReproduceInThreads;
+package RecordAndReproduceInThreads;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

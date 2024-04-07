@@ -43,8 +43,17 @@ public class Recorder implements Runnable{
                 bytesRead = line.read(buffer, 0, buffer.length);
                 if(bytesRead>0){
                     byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                    dos.writeInt(bytesRead);
+                     dos.writeInt(bytesRead);
                     dos.write(buffer,0,bytesRead);
+/* 
+                    byte[] mergedBuffer=new byte[bufferCopy.length];
+                    for (int i = 2500; i < mergedBuffer.length; i++) {
+                        mergedBuffer[i] = (byte) ((bufferCopy[i-2500] + bufferCopy[i]) / 2);
+                    }
+                    
+
+                    dos.writeInt(bytesRead);
+                    dos.write(mergedBuffer,0,bytesRead); */
                 }
                 Thread.sleep(1);
                

@@ -1,4 +1,4 @@
-package RecordAndReproduceImmediately.RecordAndReproduceInThreads;
+package RecordAndReproduceInThreads;
 
 import java.util.LinkedList;
 import java.util.Queue;
