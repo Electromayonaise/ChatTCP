@@ -5,6 +5,7 @@ import java.util.List;
 public class ServerAudioManager {
     
     private Chatters chatters;
+    private CallParticipants callParticipants;
 
     private List<Thread> currentCalls;
     /*AHORA se debe crear un objeto llamada que
@@ -16,26 +17,27 @@ public class ServerAudioManager {
      * Con el metodo .isAlive nos damos cuenta si un hilo sirve o no
      * esto lo p
      */
-
-    public ServerAudioManager(Chatters chatters) {
+/* */
+    public ServerAudioManager(Chatters chatters,CallParticipants callParticipants) {
         this.chatters=chatters;
         this.currentCalls=new ArrayList<>();
+        this.callParticipants=callParticipants;
     }
 
-    public boolean addCall(String name1, String name2){
-        Person person1=chatters.getPerson(name1);
-        Person person2=chatters.getPerson(name2);
+    public boolean addCall(String username1, String username2){
+        CallParticipant callParticipant1=callParticipants.getCallParticipant(username1);
+        CallParticipant callParticipant2=callParticipants.getCallParticipant(username2);
         System.out.println("LINEA 28");
-        if(person1==null){
-            System.out.println("person1 no esta"+person1);
+        if(callParticipant1==null){
+            System.out.println("person1 no esta"+callParticipant1);
             return false;
         }
-        if(person2==null){
-            System.out.println("person2 no esta"+person2);
+        if(callParticipant2==null){
+            System.out.println("person2 no esta"+callParticipant2);
             return false;
         }
         System.out.println("linea 36");
-        Call call=new Call(person1.getDis(), person2.getDis(), person1.getDos(), person2.getDos());
+        Call call=new Call(callParticipant1.getDis(), callParticipant2.getDis(), callParticipant1.getDos(), callParticipant2.getDos());
         Thread threadCall=new Thread(call);
         threadCall.start();
         currentCalls.add(threadCall);

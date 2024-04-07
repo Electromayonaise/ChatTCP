@@ -10,24 +10,11 @@ public class Person {
     PrintWriter out;    //canal para enviarle mensajes a ese usuario
     private String lastPrivateMessage; //ultimo mensaje privado recibido
     private String lastPrivateMessageSender; //nombre del usuario que envio el ultimo mensaje privado
-    /*Nuevo */
-    private DataOutputStream dos; //Canal para enviar audios
-    private DataInputStream dis; //canal para recibir audios
-    private String ip;
-    
-    public void setDos(DataOutputStream dos) {
-        this.dos = dos;
-    }
 
-    public void setDis(DataInputStream dis) {
-        this.dis = dis;
-    }
-
-    public Person(String name, PrintWriter out,DataOutputStream dos, DataInputStream dis){
+    public Person(String name, PrintWriter out){
         this.name = name;
         this.out  = out;
-        this.dos =dos;
-        this.dis=dis;
+        
     }
    
     public String getName() {
@@ -50,12 +37,7 @@ public class Person {
     public String getLastPrivateMessage() {
         return lastPrivateMessage;
     }
-    public DataInputStream getDis(){
-        return dis;
-    }
-    public DataOutputStream getDos(){
-        return dos;
-    }
+    
 
     
 }
