@@ -30,7 +30,6 @@ public class Player implements Runnable{
         }
     }
     public void addBytesToQueue(byte[] bytes){
-    
         queue.add(bytes);
     }
 
@@ -47,7 +46,7 @@ public class Player implements Runnable{
                     byte[] receivedBytes = new byte[length];
                     dis.readFully(receivedBytes); // Read the bytes
                     speakers.write(receivedBytes,0,receivedBytes.length);
-                    System.out.println("recibo algo");
+                    
                 }
                 try {
                     Thread.sleep(1);

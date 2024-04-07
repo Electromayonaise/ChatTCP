@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 
 import Audio.AudioManager;
+import Audio.AudioSocketConnector;
 
 public class Client {
     private static final String SERVER_IP = "localhost";
@@ -11,15 +12,14 @@ public class Client {
     public static void main(String[] args) {
         BufferedReader in; //del servidor al cliente
         PrintWriter out; //del cliente al servidor
-        /*NUEVO AUDIO */
-        DataInputStream din; //del servidor al cliente
-        DataOutputStream dos;
-        AudioManager audioManager;
+        
         
         
         try {
             Socket socket = new Socket(SERVER_IP, PORT);
+            
             System.out.println("Conectado al servidor.");
+            
 
             String message;
             //canal de entrada para el usuario
@@ -36,7 +36,7 @@ public class Client {
             
             
             String msg;
-
+            String input;
             do {
                 
                 //solicitar al usuario un alias, o nombre y enviarlo al servidor
@@ -46,11 +46,19 @@ public class Client {
                 
                 //no debe salir de este bloque hasta que el nombre no sea aceptado
                 //al ser aceptado notificar, de lo contrario seguir pidiendo un alias
-                out.println(userInput.readLine());
+                input=userInput.readLine();
+                out.println(input);
                 msg=in.readLine();
                 System.out.println(msg);
                 
             } while (msg.equals("El nombre de usuario ya existe"));
+
+            /*NUEVO una vez ya se tiene un nombre de usuario nos podemos conectar al flujo de lllamadas */
+            Thread AudioSocketConnector= new AudioSocketConnector(input);
+            AudioSocketConnector.start();
+        
+
+            /*NUEVO */
                  
             //creamos el objeto Lector e iniciamos el hilo que nos permitira estar atentos a los mensajes
             //que llegan del servidor
@@ -64,22 +72,9 @@ public class Client {
                 threadException.printStackTrace();
             }
            
-            /*NUEVO */
-            din=new DataInputStream(socket.getInputStream());
-            dos=new DataOutputStream(socket.getOutputStream());
             
-            audioManager=new AudioManager(din, dos); 
-           /*Problema: al momento de empezar a registrar el audio 
-           /* y se envian esos bits, el servidor no puede diferencia
-           si los bits que le llegan son de audio o son de texto.
-
-           Entonces toca crear otro socket que me de otro stream exclusivo para llaamdas
-           luego otro exclusivo para mensajes de audio
-           // audioManager.initPlayer();
+           
             
-          //  audioManager.initRecorder();
-            /*----- */
-            System.out.println("Audio iniciado");
             
 
 

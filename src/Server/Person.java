@@ -13,7 +13,15 @@ public class Person {
     /*Nuevo */
     private DataOutputStream dos; //Canal para enviar audios
     private DataInputStream dis; //canal para recibir audios
+    private String ip;
     
+    public void setDos(DataOutputStream dos) {
+        this.dos = dos;
+    }
+
+    public void setDis(DataInputStream dis) {
+        this.dis = dis;
+    }
 
     public Person(String name, PrintWriter out,DataOutputStream dos, DataInputStream dis){
         this.name = name;
