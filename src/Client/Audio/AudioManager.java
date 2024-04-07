@@ -23,6 +23,9 @@ public class AudioManager {
 
     private Thread playerThread;
 
+  
+  
+
     public AudioManager(DataInputStream din, DataOutputStream don){
         this.format = new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
         this.din=din;
@@ -39,9 +42,10 @@ public class AudioManager {
             System.out.println("NO INICIE RECORDER");
             return false;
         }
+        recorder.setRecord(true);
         recordThread=new Thread(recorder);
+        
         recordThread.start();
-        System.out.println("INICIE RECORDER");
         return true;
     }
     public boolean initVoiceNoteRecorder(int duration){

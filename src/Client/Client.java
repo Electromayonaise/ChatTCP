@@ -54,8 +54,16 @@ public class Client {
             } while (msg.equals("El nombre de usuario ya existe"));
 
             /*NUEVO una vez ya se tiene un nombre de usuario nos podemos conectar al flujo de lllamadas */
-            Thread AudioSocketConnector= new AudioSocketConnector(input);
+            AudioSocketConnector audioSocketConnector=new AudioSocketConnector(input);
+            Thread AudioSocketConnector= (Thread) audioSocketConnector;
             AudioSocketConnector.start();
+            try {
+                audioSocketConnector.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            AudioManager audioManager=audioSocketConnector.getAudioManager();
         
 
             /*NUEVO */
@@ -65,6 +73,7 @@ public class Client {
             //inicar el hilo
             
             Lector lector=new Lector(in);
+            lector.setAudioManager(audioManager);
             Thread theadDeLectura=new Thread(lector);
             try {
                 theadDeLectura.start();

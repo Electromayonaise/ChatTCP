@@ -17,6 +17,7 @@ public class Recorder implements Runnable{
     private int bytesRead;
     private byte[] buffer;
     private DataOutputStream dos;
+    private boolean isRecording;
     
     
     public Recorder(DataOutputStream dos,AudioFormat format) {
@@ -24,6 +25,7 @@ public class Recorder implements Runnable{
         info = new DataLine.Info(TargetDataLine.class, format);
         buffer=new byte[4096];
         this.dos=dos;
+        this.isRecording=false;
         try {
             line = (TargetDataLine) AudioSystem.getLine(info);
         } catch (LineUnavailableException e) {
@@ -32,6 +34,13 @@ public class Recorder implements Runnable{
             e.printStackTrace();
         }
     }
+    public boolean isRecording(){
+        return isRecording;
+    }
+    public void setRecord(boolean val){
+        this.isRecording=val;
+    }
+    
     
     
 
@@ -40,15 +49,17 @@ public class Recorder implements Runnable{
             line.open(format);
             line.start();
             while (true) {
-                bytesRead = line.read(buffer, 0, buffer.length);
-                
-                if(bytesRead>0){
-                    byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                    dos.writeInt(bufferCopy.length);
-                    dos.write(bufferCopy);
+                    while(isRecording){
+                    bytesRead = line.read(buffer, 0, buffer.length);
                     
+                    if(bytesRead>0){
+                        byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
+                        dos.writeInt(bufferCopy.length);
+                        dos.write(bufferCopy);
+                        
+                    }
+                    Thread.sleep(1);
                 }
-                Thread.sleep(1);
                
             }
         } catch (Exception e) {
