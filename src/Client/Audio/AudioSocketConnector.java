@@ -28,7 +28,7 @@ public class AudioSocketConnector extends Thread{
             
             Socket socket;
             socket = new Socket(SERVER_IP,PORT);
-            System.out.println("CONECTADO al socket de audio");
+            
             /*NUEVO */
             din=new DataInputStream(socket.getInputStream());
             dos=new DataOutputStream(socket.getOutputStream());

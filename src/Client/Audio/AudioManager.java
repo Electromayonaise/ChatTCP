@@ -39,8 +39,8 @@ public class AudioManager {
     }
     public boolean initRecorder(){
         if(recordThread!=null&&recordThread.isAlive()){
-            System.out.println("NO INICIE RECORDER");
-            return false;
+            recorder.setRecord(true);
+            return true;
         }
         recorder.setRecord(true);
         recordThread=new Thread(recorder);
@@ -55,6 +55,10 @@ public class AudioManager {
         voiceNoteRecorder.setDuration(duration);
         recordThread=new Thread(voiceNoteRecorder);
         recordThread.start();
+        return true;
+    }
+    public boolean stopRecording(){
+        recorder.setRecord(false);
         return true;
     }
     public boolean initPlayer(){

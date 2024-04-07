@@ -361,7 +361,7 @@ class ClientHandler implements Runnable {
         if(flag){
             out.println("Llamada dirigida a "+targetUser+" iniciada");
         }else{
-            out.println("Llamada no iniciada, algo fallo");
+            out.println("Llamada no iniciada. El usuario no se encontro");
         }
         
 
@@ -370,11 +370,11 @@ class ClientHandler implements Runnable {
 
     }
     private void handleGrupalCall(){
-        out.println("Llamada grupal iniciada");
+        out.println("Llamada dirigida al grupo actual iniciada");
         
     }
     private void handleEndCall(){
-        out.println("llamada actual finalizada");
+        out.println("Llamada actual finalizada");
     }
 
 }
