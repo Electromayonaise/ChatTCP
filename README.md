@@ -30,6 +30,10 @@ javac -d ..\..\out\Server Server.java
 
 javac -d ..\..\out\Client Client.java
 ```
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Compile.png"
+       alt="compile" /></a>
+</div>
 
 ### 3. Ejecutar el servidor.
 
@@ -49,7 +53,10 @@ Servidor iniciado, Esperando clientes ...
 # Si aparece el mensaje anterior, el servidor se ha iniciado correctamente, y debes de dejar la terminal abierta para que el servidor siga funcionando.
 
 ```
-
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Excecute%20server.png"
+       alt="excecuteServer" /></a>
+</div>
 
 ### 4. Ejecutar el cliente.
 
@@ -68,11 +75,28 @@ Ingrese su nombre de usuario
 
 ```
 
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Excecute%20client.png"
+       alt="excecuteClient" /></a>
+</div>
+
 ### 5. Instrucciones para conectar clientes en diferentes computadoras.
 
-Para conectar clientes en diferentes computadoras, primero debes de saber la dirección IP de la computadora que está corriendo el servidor. Para ello, en la terminal de la computadora que está corriendo el servidor, ejecuta el siguiente comando: `ipconfig`
+Para conectar clientes en diferentes computadoras, primero debes de saber la dirección IP de la computadora que está corriendo el servidor. Para ello, en la terminal de la computadora que está corriendo el servidor, ejecuta el siguiente comando: `ipconfig` Busca la dirección IPv4 de la interfaz de red que estás utilizando, y anótala.
 
-Busca la dirección IPv4 de la interfaz de red que estás utilizando, y anótala. Posteriormente, en el archivo Client.java, cambia la dirección IP de localhost por la dirección IPv4 que anotaste anteriormente, y repite el proceso de compilado y ejecucion del cliente; de igual manera inicia varios clientes para probar las funcionalidades.
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Select%20server%20IP.png"
+       alt="selectServerIP" /></a>
+</div>
+
+Posteriormente, en el archivo Client.java, cambia la dirección IP de localhost por la dirección IPv4 que anotaste anteriormente
+
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Update%20server%20IP.png"
+       alt="updateServerIP" /></a>
+</div>
+
+Por último repite el proceso de compilado y ejecucion del cliente; de igual manera inicia varios clientes para probar las funcionalidades.
 
 ### 6. Utilizar las funcionalidades del chat que le aparecen al cliente una vez se ejecuta. 
 # 
