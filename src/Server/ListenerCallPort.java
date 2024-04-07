@@ -7,9 +7,11 @@ import java.net.Socket;
 
 public class ListenerCallPort extends Thread{
     private Chatters clientes;
+    private CallParticipants callParticipants;
     private static int CALL_PORT= 6790;
-    public ListenerCallPort(Chatters clientes){
+    public ListenerCallPort(Chatters clientes,CallParticipants callParticipants){
         this.clientes=clientes;
+        this.callParticipants=callParticipants;
     }
     public void run(){
 
@@ -21,9 +23,8 @@ public class ListenerCallPort extends Thread{
                 System.out.println("Nuevo cliente conectado: al canal de llamadas " + socket);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String clientName=in.readLine();
-                Person person=clientes.getPerson(clientName);
-                person.setDis(new DataInputStream(socket.getInputStream()));
-                person.setDos(new DataOutputStream(socket.getOutputStream()));
+                callParticipants.addCallParticipant(clientName, new DataInputStream(socket.getInputStream()), new DataOutputStream( socket.getOutputStream()));
+                
             }
         }catch(Exception e){
             e.printStackTrace();

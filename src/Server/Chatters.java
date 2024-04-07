@@ -37,9 +37,9 @@ public class Chatters {
     }
 
     // metodo para agregar un usuario nuevo
-    public boolean add(String name, PrintWriter out,DataOutputStream don,DataInputStream din) {
+    public boolean add(String name, PrintWriter out) {
         if (!exists(name)) {
-            clientes.add(new Person(name, out,don,din));
+            clientes.add(new Person(name, out));
             return true;
         }
         return false;

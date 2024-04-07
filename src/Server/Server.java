@@ -12,9 +12,12 @@ public class Server {
         
         int PORT = 6789;
         Chatters clientes = new Chatters(); //lista de clientes
-        ServerAudioManager serverAudioManager= new ServerAudioManager(clientes);
-        Thread listenerCallPort= new ListenerCallPort(clientes);
+        /*NUEVO */
+        CallParticipants callParticipants=new CallParticipants(); //listas de participante de llamda
+        ServerAudioManager serverAudioManager= new ServerAudioManager(clientes,callParticipants);
+        Thread listenerCallPort= new ListenerCallPort(clientes,callParticipants);
         listenerCallPort.start();
+        /*NUEVO */
 
 
 
