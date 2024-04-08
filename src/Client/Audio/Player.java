@@ -41,7 +41,6 @@ public class Player implements Runnable{
                 
                 int availableBytes = dis.available();
                 
-                
                 if (availableBytes > 0) {
                     int length = dis.readInt(); // Read the length first
                     byte[] receivedBytes = new byte[length];

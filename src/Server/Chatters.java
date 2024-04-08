@@ -153,7 +153,7 @@ public class Chatters {
 
     // metodo para enviar un mensaje a un usuario
     public void notifyCall(String recieverName, String senderName) {
-        String message="Estás recibiendo una llamada de "+senderName;
+        String message="Estas recibiendo una llamada de "+senderName;
         for (Person p : clientes) {
             if (p.getName().equals(recieverName)) {
                 p.getOut().println(message);

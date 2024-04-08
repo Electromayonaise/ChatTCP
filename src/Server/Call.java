@@ -184,6 +184,7 @@ public class Call implements Runnable{
                     client2Dis.readFully(receivedBytes2);
                     client1Dos.writeInt(receivedBytes2.length);
                     client1Dos.write(receivedBytes2,0,receivedBytes2.length);
+                    System.out.println("ESTOY RECIBIENDO DEL CLIENTE2");
                 }
                 
 
