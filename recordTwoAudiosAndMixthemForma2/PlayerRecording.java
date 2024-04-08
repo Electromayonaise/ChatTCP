@@ -39,6 +39,9 @@ public class PlayerRecording {
         byte[] buffer2 = new byte[1024];
         
         byte[] mergedBuffer = new byte[1024];
+
+       
+
         
 		try {
 			
@@ -53,6 +56,9 @@ public class PlayerRecording {
                     for(int i=0;i<1024;i++){
                         if(i<count && i<count2){
                             mergedBuffer[i]= (byte) ( (buffer[i]+buffer2[i]) );
+                            /*Si sumamos un audio y luego lo restamos, ese audio se anula, nos quedamo asi con un solo audio*/
+                            /*Entonces para enviar varios audios, primero fusionamos todos y luego restamos cada uno y ya */
+                            mergedBuffer[i]= (byte) ( (mergedBuffer[i]-buffer[i]) );
                         }else if(i<count){
                             mergedBuffer[i]=(byte) buffer[i];
                         }else if(i<count2){
