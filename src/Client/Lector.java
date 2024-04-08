@@ -34,6 +34,13 @@ public class Lector implements Runnable{
                     if(audioManager!=null){
                         audioManager.stopRecording();
                     }
+                }else if(message.startsWith("Estas recibiendo una llamada de")){
+                    if(audioManager!=null){
+                        audioManager.initRecorder();
+                    }else{
+                        System.out.println("Hubo problemas en la captura del microfono");
+                    }
+
                 }
             }
         } catch (IOException e) {

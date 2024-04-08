@@ -5,7 +5,7 @@ import Audio.AudioManager;
 import Audio.AudioSocketConnector;
 
 public class Client {
-    private static final String SERVER_IP = "localhost";
+    private static final String SERVER_IP = "172.20.10.11";
     private static final int PORT = 6789;
     
 

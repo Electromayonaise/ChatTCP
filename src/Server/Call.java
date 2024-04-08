@@ -158,7 +158,7 @@ public class Call implements Runnable{
         DataInputStream client2Dis=list.get(1).getDis();
 
         DataOutputStream client1Dos=list.get(0).getDos();
-        DataOutputStream client2Dos=list.get(0).getDos();
+        DataOutputStream client2Dos=list.get(1).getDos();
         
         while (true) {
             /*client1 recibe */

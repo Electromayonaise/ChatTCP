@@ -359,6 +359,7 @@ class ClientHandler implements Runnable {
         System.out.println("358");
         boolean flag=serverAudioManager.addCall(clientName,targetUser);
         if(flag){
+            clientes.notifyCall(targetUser, clientName);
             out.println("Llamada dirigida a "+targetUser+" iniciada");
         }else{
             out.println("Llamada no iniciada. El usuario no se encontro");
