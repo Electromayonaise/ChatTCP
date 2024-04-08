@@ -50,6 +50,7 @@ public class Recorder implements Runnable{
             line.start();
             while (true) {
                     while(isRecording){
+                        System.out.println("ESTOY GRABANDO DESDE");
                     bytesRead = line.read(buffer, 0, buffer.length);
                     
                     if(bytesRead>0){

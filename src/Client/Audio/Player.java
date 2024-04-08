@@ -40,6 +40,7 @@ public class Player implements Runnable{
             while (true) {
                 
                 int availableBytes = dis.available();
+                System.out.println("estoy escuchando");
                 
                 if (availableBytes > 0) {
                     int length = dis.readInt(); // Read the length first

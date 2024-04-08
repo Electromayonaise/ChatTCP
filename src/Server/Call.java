@@ -132,14 +132,68 @@ public class Call implements Runnable{
      //   sendBytesToOneParticipant(list.get(0), currentParticipantsBuffers.get( (list.get(1)) .getUsername() ), SIZE);
        
     }
-    @Override
-    public void run(){
+    
+    public void run1(){
         System.out.println("");
         while(true){
             System.out.println("ALO");
             communicateTwoParticipants();
             
             
+        }
+    }
+    @Override
+    public void run(){
+        List<CallParticipant> list=new ArrayList<>();
+        for (Map.Entry<CallParticipant, byte[]> entry : currentParticipantsBuffers.entrySet()) {
+             list.add(entry.getKey());
+        }
+        if(list.size()==1){
+            System.out.println("AUTOLLAMADA");
+           list.add(list.get(0));
+        }
+        System.out.println("Size de la lista"+list.size());
+        
+        DataInputStream client1Dis=list.get(0).getDis();
+        DataInputStream client2Dis=list.get(1).getDis();
+
+        DataOutputStream client1Dos=list.get(0).getDos();
+        DataOutputStream client2Dos=list.get(0).getDos();
+        
+        while (true) {
+            /*client1 recibe */
+            try {
+                
+                int availableBytesFromClient1 = client1Dis.available();
+                /*Recibe del client 1 y envio a client1 para probar de momento */
+                if(availableBytesFromClient1>0){
+                    
+                    int length = client1Dis.readInt();
+                    byte[] receivedBytes = new byte[length];
+                    client1Dis.readFully(receivedBytes);
+                    client2Dos.writeInt(receivedBytes.length);
+                    client2Dos.write(receivedBytes,0,receivedBytes.length);
+                }
+                
+                 
+                int availableBytesFromClient2 = client2Dis.available();
+                //Recibo del client2 y envio a client 1 
+                if(availableBytesFromClient2>0){
+                    int length2 =client2Dis.readInt();
+                    byte[] receivedBytes2 =new byte[length2];
+                    client2Dis.readFully(receivedBytes2);
+                    client1Dos.writeInt(receivedBytes2.length);
+                    client1Dos.write(receivedBytes2,0,receivedBytes2.length);
+                }
+                
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO Auto-generated catch block
+                break;
+            }
+        
         }
     }
   
