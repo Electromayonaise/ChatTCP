@@ -1,5 +1,6 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Objects;
 
 public class CallParticipant {
     private String username;
@@ -9,6 +10,9 @@ public class CallParticipant {
         this.username = username;
         this.dis = dis;
         this.dos = dos;
+    }
+    public String getUsername(){
+        return username;
     }
     public DataInputStream getDis() {
         return dis;
@@ -26,7 +30,7 @@ public class CallParticipant {
     public void setDos(DataOutputStream dos) {
         this.dos = dos;
     }
-    
+
     @Override
     public String toString() {
         return "CallParticipant{" +
@@ -34,6 +38,19 @@ public class CallParticipant {
                 ", dis=" + dis +
                 ", dos=" + dos +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CallParticipant that = (CallParticipant) o;
+        return Objects.equals(username, that.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 
     

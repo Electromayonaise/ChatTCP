@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServerAudioManager {
     
@@ -37,9 +39,17 @@ public class ServerAudioManager {
             return false;
         }
         System.out.println("linea 36");
-        Call call=new Call(callParticipant1.getDis(), callParticipant2.getDis(), callParticipant1.getDos(), callParticipant2.getDos());
+        Set<CallParticipant> callParticipantsSet = new HashSet<>();
+        
+        callParticipantsSet.add(callParticipant1);
+        callParticipantsSet.add(callParticipant2);
+
+        Call call=new Call(callParticipantsSet);
+        
+        
         Thread threadCall=new Thread(call);
         threadCall.start();
+        System.out.println("linea 52");
         currentCalls.add(threadCall);
         return true;
     }
