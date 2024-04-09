@@ -96,6 +96,13 @@ Posteriormente, en el archivo Client.java, cambia la dirección IP de localhost 
        alt="updateServerIP" /></a>
 </div>
 
+Cambia la misma dirección IP en AudioSocketConnector.java, localizado en la carpeta audio dentro de la carpeta client. 
+
+<div align="center">
+  <img  src="https://github.com/Electromayonaise/ChatTCP/blob/main/InstructionAssets/Update%20audioSocketConnector%20IP.png"
+       alt="updateServerIP" /></a>
+</div>
+
 Por último repite el proceso de compilado y ejecucion del cliente; de igual manera inicia varios clientes para probar las funcionalidades.
 
 ### 6. Utilizar las funcionalidades del chat que le aparecen al cliente una vez se ejecuta. 
