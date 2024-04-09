@@ -132,8 +132,8 @@ public class Call implements Runnable{
      //   sendBytesToOneParticipant(list.get(0), currentParticipantsBuffers.get( (list.get(1)) .getUsername() ), SIZE);
        
     }
-    
-    public void run1(){
+    @Override
+    public void run(){
         System.out.println("");
         while(true){
             System.out.println("ALO");
@@ -142,8 +142,8 @@ public class Call implements Runnable{
             
         }
     }
-    @Override
-    public void run(){
+    
+    public void run1(){
         List<CallParticipant> list=new ArrayList<>();
         for (Map.Entry<CallParticipant, byte[]> entry : currentParticipantsBuffers.entrySet()) {
              list.add(entry.getKey());
