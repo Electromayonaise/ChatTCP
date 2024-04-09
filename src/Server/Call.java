@@ -152,7 +152,7 @@ public class Call implements Runnable{
             System.out.println("AUTOLLAMADA");
            list.add(list.get(0));
         }
-        System.out.println("Size de la lista"+list.size());
+        
         
         DataInputStream client1Dis=list.get(0).getDis();
         DataInputStream client2Dis=list.get(1).getDis();
@@ -184,7 +184,7 @@ public class Call implements Runnable{
                     client2Dis.readFully(receivedBytes2);
                     client1Dos.writeInt(receivedBytes2.length);
                     client1Dos.write(receivedBytes2,0,receivedBytes2.length);
-                    System.out.println("ESTOY RECIBIENDO DEL CLIENTE2");
+                    
                 }
                 
 
