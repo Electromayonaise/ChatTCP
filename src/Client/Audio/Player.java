@@ -50,9 +50,12 @@ public class Player implements Runnable{
                     
                     if (availableBytes > 0) {
                         int length = dis.readInt(); // Read the length first
-                        byte[] receivedBytes = new byte[length];
-                        dis.readFully(receivedBytes); // Read the bytes
-                        speakers.write(receivedBytes,0,receivedBytes.length);
+                        if(length>0){
+                            byte[] receivedBytes = new byte[length];
+                            dis.readFully(receivedBytes); // Read the bytes
+                            speakers.write(receivedBytes,0,receivedBytes.length);
+                        }
+                        
                         
                     }
                     try {
