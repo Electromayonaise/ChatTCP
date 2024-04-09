@@ -114,11 +114,7 @@ public class Call implements Runnable{
         for (Map.Entry<CallParticipant, byte[]> entry : currentParticipantsBuffers.entrySet()) {
              list.add(entry.getKey());
         }
-        if(list.size()==1){
-            System.out.println("AUTOLLAMADA");
-           list.add(list.get(0));
-        }
-        System.out.println("Size de la lista"+list.size());
+        
         byte[] participant1Buffer= currentParticipantsBuffers.get( (list.get(0)) );
         
         sendBytesToOneParticipant(list.get(1), participant1Buffer, SIZE);
@@ -132,8 +128,8 @@ public class Call implements Runnable{
      //   sendBytesToOneParticipant(list.get(0), currentParticipantsBuffers.get( (list.get(1)) .getUsername() ), SIZE);
        
     }
-    @Override
-    public void run(){
+    
+    public void run1(){
         System.out.println("");
         while(true){
             System.out.println("ALO");
@@ -142,17 +138,14 @@ public class Call implements Runnable{
             
         }
     }
+    @Override
     
-    public void run1(){
+    public void run(){
         List<CallParticipant> list=new ArrayList<>();
         for (Map.Entry<CallParticipant, byte[]> entry : currentParticipantsBuffers.entrySet()) {
              list.add(entry.getKey());
         }
-        if(list.size()==1){
-            System.out.println("AUTOLLAMADA");
-           list.add(list.get(0));
-        }
-        
+               
         
         DataInputStream client1Dis=list.get(0).getDis();
         DataInputStream client2Dis=list.get(1).getDis();
