@@ -38,6 +38,13 @@ class ClientHandler implements Runnable {
     private DataInputStream din;
     private DataOutputStream don;
     private ServerAudioManager serverAudioManager;
+
+    /* VOICE NOTES */
+    private static  int SAMPLE_RATE = 16000; // Frecuencia de muestreo en Hz
+    private static  int SAMPLE_SIZE_IN_BITS = 16; // Tamaño de muestra en bits
+    private static  int CHANNELS = 1; // Mono
+    private static  boolean SIGNED = true; // Muestras firmadas
+    private static  boolean BIG_ENDIAN = false; // Little-endian
     
 
     public ClientHandler(Socket socket, Chatters clientes, ServerAudioManager serverAudioManager) {
@@ -335,12 +342,35 @@ class ClientHandler implements Runnable {
             String[] parts = message.split("\\s+", 3);
             int duration=Integer.parseInt(parts[1]);
             String targetUser=parts[2];
-            out.println("Nota de voz dirigida a "+targetUser+" iniciada."+"Tiene una duracion de "+ duration+" segundos");
+            if(clientes.exists(targetUser)){
+
+                out.println("Nota de voz dirigida a "+targetUser+" iniciada."+"Tiene una duracion de "+ duration+" segundos");
+
+                AudioFormat format = new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                
+                //iniciar objeto de grabacion de audio
+                RecordAudio recorder = new RecordAudio(format, duration,byteArrayOutputStream);
+                Thread recorderTrh   = new Thread(recorder);
+                recorderTrh.start();
+                //esperar a que la grabacion termine
+                try{
+                    recorderTrh.join();
+                }catch(Exception e){
+                    //TODO
+                }
+
+                byte[] audioData = byteArrayOutputStream.toByteArray();
+                clientes.voiceNote(format, audioData,targetUser);
+
+            }
+            else{
+                out.println("ERROR: El usuario no existe");
+                return;
+            }
             
-        } catch (IndexOutOfBoundsException e) {
-            out.println("ERROR en los argumentos del comando");
-        } catch (NumberFormatException e){
-            out.println("ERROR: La duracion no es valida");
+        } catch (Exception e){
+            // TODO: handle exception
         }
         
     }
@@ -349,7 +379,34 @@ class ClientHandler implements Runnable {
         String[] parts = message.split("\\s+", 2);
         int duration=Integer.parseInt(parts[1]);
         out.println("Nota de voz con una duracion de "+duration+" iniciada");
-        
+
+        try {                
+            //meter lo del grupo
+            if(currentGroup!=null){
+                AudioFormat format = new AudioFormat(SAMPLE_RATE, SAMPLE_SIZE_IN_BITS, CHANNELS, SIGNED, BIG_ENDIAN);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                
+                //iniciar objeto de grabacion de audio
+                RecordAudio recorder = new RecordAudio(format, duration,byteArrayOutputStream);
+                Thread recorderTrh   = new Thread(recorder);
+                recorderTrh.start();
+                //esperar a que la grabacion termine
+                try{
+                    recorderTrh.join();
+                }catch(Exception e){
+                    //TODO
+                }
+
+                byte[] audioData = byteArrayOutputStream.toByteArray();
+                clientes.gvoiceNote(format, audioData,currentGroup);
+            }else{
+                out.write("No te encuentras en ningun grupo actualmente");
+            }
+            
+        } catch (Exception e){
+            // TODO: handle exception
+        }
+
     }
 
     private void handleCall(String message){

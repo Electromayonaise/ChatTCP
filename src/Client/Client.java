@@ -5,9 +5,9 @@ import Audio.AudioManager;
 import Audio.AudioSocketConnector;
 
 public class Client {
-    private static final String SERVER_IP = "192.168.1.30";
+    private static final String SERVER_IP = "localhost";
     private static final int PORT = 6789;
-    
+
 
     public static void main(String[] args) {
         BufferedReader in; //del servidor al cliente
@@ -80,12 +80,6 @@ public class Client {
             } catch (Exception threadException) {
                 threadException.printStackTrace();
             }
-           
-            
-           
-            
-            
-
 
             //estar atento a la entrada del usuario para poner los mensajes en el canal de salida out
             //en el hilo principal solo enviamos lo que escriba el usuario

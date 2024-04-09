@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 public class AudioSocketConnector extends Thread{
 
-    private static final String SERVER_IP = "192.168.1.30";
+    private static final String SERVER_IP = "localhost";
     private static final int PORT = 6790;
     private String username;
     private AudioManager audioManager;

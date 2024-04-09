@@ -1,4 +1,7 @@
 import java.util.Set;
+
+import javax.sound.sampled.AudioFormat;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PrintWriter;
@@ -157,6 +160,22 @@ public class Chatters {
         for (Person p : clientes) {
             if (p.getName().equals(recieverName)) {
                 p.getOut().println(message);
+            }
+        }
+    }
+
+    public void voiceNote(AudioFormat format, byte[] audioData, String person){
+        Person client = getPerson(person);
+
+        client.initiateAudio(format, audioData);
+
+        
+    }
+
+    public void gvoiceNote(AudioFormat format, byte[] audioData,String currentGroup){
+        if (groups.containsKey(currentGroup)) {
+            for (Person p : groups.get(currentGroup)) {
+                p.initiateAudio(format, audioData);
             }
         }
     }
