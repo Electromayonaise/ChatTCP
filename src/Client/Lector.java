@@ -26,6 +26,7 @@ public class Lector implements Runnable{
                     if(audioManager!=null){
                         System.out.println("Captura de microfono iniciada");
                         audioManager.initRecorder();
+                        audioManager.initPlayer();
                     }else{
                         System.out.println("Hubo problemas en la captura del microfono");
                     }
@@ -33,10 +34,13 @@ public class Lector implements Runnable{
                 }else if(message.equals("Llamada actual finalizada")){
                     if(audioManager!=null){
                         audioManager.stopRecording();
+                        audioManager.stopPlaying();
                     }
+                    
                 }else if(message.startsWith("Estas recibiendo una llamada de")){
                     if(audioManager!=null){
                         audioManager.initRecorder();
+                        audioManager.initPlayer();
                     }else{
                         System.out.println("Hubo problemas en la captura del microfono");
                     }

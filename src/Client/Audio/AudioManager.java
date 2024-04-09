@@ -38,7 +38,7 @@ public class AudioManager {
         
     }
     public boolean initRecorder(){
-        if(recordThread!=null&&recordThread.isAlive()){
+        if(recordThread!=null){
             recorder.setRecord(true);
             return true;
         }
@@ -49,7 +49,7 @@ public class AudioManager {
         return true;
     }
     public boolean initVoiceNoteRecorder(int duration){
-        if(recordThread!=null&&recordThread.isAlive()){
+        if(recordThread!=null){
             return false;
         }
         voiceNoteRecorder.setDuration(duration);
@@ -57,13 +57,17 @@ public class AudioManager {
         recordThread.start();
         return true;
     }
+    public boolean stopPlaying(){
+        player.setPlay(false);
+        return true;
+    }
     public boolean stopRecording(){
         recorder.setRecord(false);
         return true;
     }
     public boolean initPlayer(){
-        if(playerThread!=null &&!playerThread.isAlive()){
-            return false;
+        if(playerThread!=null ){
+            player.setPlay(true);
         }
         playerThread=new Thread(player);
         playerThread.start();

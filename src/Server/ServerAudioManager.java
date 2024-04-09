@@ -1,5 +1,7 @@
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +12,7 @@ public class ServerAudioManager {
     private CallParticipants callParticipants;
 
     private List<Thread> currentCalls;
+    private HashMap<CallParticipant,Call> callMap;
     /*AHORA se debe crear un objeto llamada que
      * constantemente reciba de los bytes del audio de la persona  A
      * que graba y los reenvie al  cliente B. De igual forma
@@ -24,6 +27,27 @@ public class ServerAudioManager {
         this.chatters=chatters;
         this.currentCalls=new ArrayList<>();
         this.callParticipants=callParticipants;
+        this.callMap=new HashMap<>();
+    }
+    public boolean endCall(String username){
+        if(!callParticipants.isACallParticipant(username)){
+            System.out.println("No se pudo finalizar llamada");
+        }
+        return endCall(callParticipants.getCallParticipant(username));
+    }
+    private boolean endCall(CallParticipant callParticipant){
+        if(!callMap.containsKey(callParticipant)){
+            return false;
+        }
+        Call call=callMap.get(callParticipant);
+        call.setIsRunnig(false);
+        Set<CallParticipant> participantsInCall=call.getParticipants();
+        for (CallParticipant participant : participantsInCall) {
+            callMap.remove(participant);
+            PrintWriter pw= (chatters.getPerson(participant.getUsername())).getOut();
+            pw.println("Llamada actual finalizada");
+        }
+        return true;
     }
 
     public boolean addCall(String username1, String username2){
@@ -50,7 +74,8 @@ public class ServerAudioManager {
         Thread threadCall=new Thread(call);
         threadCall.start();
         System.out.println("linea 52");
-        currentCalls.add(threadCall);
+        callMap.put(callParticipant1,call);
+        callMap.put(callParticipant2,call);
         return true;
     }
     

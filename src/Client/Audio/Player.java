@@ -16,6 +16,8 @@ public class Player implements Runnable{
     private Queue<byte[]> queue;
 
     private DataInputStream dis;
+
+    private boolean isPlaying;
     
     Player(DataInputStream dis,AudioFormat format){
         this.format=format;
@@ -28,9 +30,13 @@ public class Player implements Runnable{
             e.printStackTrace();
             speakers=null;
         }
+        isPlaying=true;
     }
     public void addBytesToQueue(byte[] bytes){
         queue.add(bytes);
+    }
+    public void setPlay(boolean isPlaying){
+        this.isPlaying=isPlaying;
     }
 
     public void run(){
@@ -39,20 +45,22 @@ public class Player implements Runnable{
             speakers.start();
             while (true) {
                 
-                int availableBytes = dis.available();
-                
-                if (availableBytes > 0) {
-                    int length = dis.readInt(); // Read the length first
-                    byte[] receivedBytes = new byte[length];
-                    dis.readFully(receivedBytes); // Read the bytes
-                    speakers.write(receivedBytes,0,receivedBytes.length);
+                while(isPlaying){
+                    int availableBytes = dis.available();
                     
-                }
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    if (availableBytes > 0) {
+                        int length = dis.readInt(); // Read the length first
+                        byte[] receivedBytes = new byte[length];
+                        dis.readFully(receivedBytes); // Read the bytes
+                        speakers.write(receivedBytes,0,receivedBytes.length);
+                        
+                    }
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
                
                 

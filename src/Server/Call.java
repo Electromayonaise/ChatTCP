@@ -14,13 +14,14 @@ public class Call implements Runnable{
     private String groupName;
     private HashMap<CallParticipant,byte[]> currentParticipantsBuffers;
     private static int SIZE=4096;
+    private boolean isRunning;
 
     public Call(Set<CallParticipant> currentParticipants) {
         this.currentParticipants=currentParticipants;
         groupName=null;
         this.currentParticipantsBuffers=new HashMap<>();
         initCurrentParticipantsBuffers(currentParticipants);
-        
+        isRunning=true;
     }
     public Call(Set<CallParticipant> currentParticipants,String groupName) {
         this.currentParticipants=currentParticipants;
@@ -28,6 +29,9 @@ public class Call implements Runnable{
         this.currentParticipantsBuffers=new HashMap<>();
         initCurrentParticipantsBuffers(currentParticipants);
 
+    }
+    public Set<CallParticipant> getParticipants(){
+        return this.currentParticipants;
     }
     public void initCurrentParticipantsBuffers(Set<CallParticipant> callParticipants){
         for (CallParticipant callParticipant : callParticipants) {
@@ -138,22 +142,22 @@ public class Call implements Runnable{
             
         }
     }
+    public void setIsRunnig(boolean isRunning){
+        this.isRunning=isRunning;
+    }
     @Override
-    
     public void run(){
         List<CallParticipant> list=new ArrayList<>();
         for (Map.Entry<CallParticipant, byte[]> entry : currentParticipantsBuffers.entrySet()) {
              list.add(entry.getKey());
         }
-               
         
         DataInputStream client1Dis=list.get(0).getDis();
         DataInputStream client2Dis=list.get(1).getDis();
 
         DataOutputStream client1Dos=list.get(0).getDos();
         DataOutputStream client2Dos=list.get(1).getDos();
-        
-        while (true) {
+        while (isRunning) {
             /*client1 recibe */
             try {
                 
@@ -189,6 +193,8 @@ public class Call implements Runnable{
             }
         
         }
+        list.get(0).setIsInCall(false);
+        list.get(1).setIsInCall(false);
     }
   
     

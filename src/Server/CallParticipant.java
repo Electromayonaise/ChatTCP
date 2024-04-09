@@ -6,10 +6,15 @@ public class CallParticipant {
     private String username;
     private DataInputStream dis;
     private DataOutputStream dos;
+    private boolean isInCall;
     public CallParticipant(String username, DataInputStream dis, DataOutputStream dos) {
         this.username = username;
         this.dis = dis;
         this.dos = dos;
+        this.isInCall=false;
+    }
+    public void setIsInCall(boolean isInCall){
+        this.isInCall=isInCall;
     }
     public String getUsername(){
         return username;

@@ -51,16 +51,16 @@ public class Recorder implements Runnable{
             while (true) {
                     while(isRecording){
                         
-                    bytesRead = line.read(buffer, 0, buffer.length);
-                    
-                    if(bytesRead>0){
-                        byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
-                        dos.writeInt(bufferCopy.length);
-                        dos.write(bufferCopy);
+                        bytesRead = line.read(buffer, 0, buffer.length);
                         
+                        if(bytesRead>0){
+                            byte[] bufferCopy = Arrays.copyOfRange(buffer, 0, bytesRead);
+                            dos.writeInt(bufferCopy.length);
+                            dos.write(bufferCopy);
+                            
+                        }
+                        Thread.sleep(1);
                     }
-                    Thread.sleep(1);
-                }
                
             }
         } catch (Exception e) {

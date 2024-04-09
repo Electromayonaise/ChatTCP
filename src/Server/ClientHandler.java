@@ -375,6 +375,7 @@ class ClientHandler implements Runnable {
         
     }
     private void handleEndCall(){
+        serverAudioManager.endCall(clientName);
         out.println("Llamada actual finalizada");
     }
 
