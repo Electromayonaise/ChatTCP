@@ -398,7 +398,7 @@ class ClientHandler implements Runnable {
                 }
 
                 byte[] audioData = byteArrayOutputStream.toByteArray();
-                clientes.gvoiceNote(format, audioData,currentGroup);
+                clientes.gvoiceNote(format, audioData,currentGroup,clientName);
             }else{
                 out.write("No te encuentras en ningun grupo actualmente");
             }

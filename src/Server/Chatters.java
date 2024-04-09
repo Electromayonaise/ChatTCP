@@ -172,10 +172,12 @@ public class Chatters {
         
     }
 
-    public void gvoiceNote(AudioFormat format, byte[] audioData,String currentGroup){
+    public void gvoiceNote(AudioFormat format, byte[] audioData,String currentGroup, String clientName){
         if (groups.containsKey(currentGroup)) {
             for (Person p : groups.get(currentGroup)) {
-                p.initiateAudio(format, audioData);
+                if(!p.getName().equals(clientName)){
+                    p.initiateAudio(format, audioData);
+                }
             }
         }
     }
