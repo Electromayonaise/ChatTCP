@@ -49,7 +49,7 @@ public class Recorder implements Runnable{
             line.open(format);
             line.start();
             while (true) {
-                    while(isRecording){
+                    
                         
                         bytesRead = line.read(buffer, 0, buffer.length);
                         
@@ -60,7 +60,7 @@ public class Recorder implements Runnable{
                             
                         }
                         Thread.sleep(1);
-                    }
+                    
                
             }
         } catch (Exception e) {
