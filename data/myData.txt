@@ -1,0 +1,19 @@
+juan se ha unido al chat
+Ahora estás en el chat global. 
+1. Usa /group [nombre_grupo] para cambiar a un grupo, o /creategroup [nombre_grupo] para crearlo.
+2. Usa /msg [nombre_usuario] para enviar un mensaje privado a un usuario.
+3. Usa /r para responder a tu ultimo mensaje privado sin necesidad de escribir el nombre de usuario.
+4. Usa /exitgroup para salir del grupo actual y volver al chat global.
+5. Usa /exit para salir del chat.
+6. Usa /voicenote [duracion] [nombre_usuario] para enviar una nota de voz a un usuario
+7. Usa /gvoicenote [duracion]  para enviar una nota de voz al grupo actual
+8. Usa /call [nombre_usuario]  para iniciar una llamada con un usuario
+9. Usa /gcall  para unirse una llamada con el grupo actual
+10. Usa /endcall para finalizar la llamada actual
+holaa
+/msg juan holaa
+juan (privado): holaa
+/crete group grupo
+/creategroup gr
+Grupo 'gr' creado exitosamente.
+/exit

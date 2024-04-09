@@ -7,11 +7,13 @@ import Audio.AudioSocketConnector;
 public class Client {
     private static final String SERVER_IP = "localhost";
     private static final int PORT = 6789;
+    private static FileManager fileManager;
 
 
     public static void main(String[] args) {
         BufferedReader in; //del servidor al cliente
         PrintWriter out; //del cliente al servidor
+        fileManager=FileManager.getInstance();
         
         
         
@@ -86,6 +88,7 @@ public class Client {
             String msgFromUser;
             while(true){
                 msgFromUser=userInput.readLine();
+                fileManager.writeToFile(msgFromUser);
                 out.println(msgFromUser);
             }
 

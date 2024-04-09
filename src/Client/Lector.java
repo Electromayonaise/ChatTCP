@@ -1,14 +1,17 @@
 import java.io.*;
 import java.net.*;
 
+
 import Audio.AudioManager;
 
 public class Lector implements Runnable{
     String message;
     BufferedReader in;
     public AudioManager audioManager;
+    private FileManager fileManager;
     public Lector(BufferedReader in){
         this.in=in;
+        this.fileManager=FileManager.getInstance();
     }
     public void setAudioManager(AudioManager audioManager) {
         this.audioManager = audioManager;
@@ -20,6 +23,7 @@ public class Lector implements Runnable{
         try { 
             
             while ((message = in.readLine()) != null) {
+                fileManager.writeToFile(message);
                 System.out.println(message);
                 if(message.startsWith("Llamada dirigida a")){
                     System.out.println("Intentando captura microfono");
