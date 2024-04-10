@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Chatters {
     // tendra una lista de personas que seran nuestros clientes
@@ -18,6 +20,7 @@ public class Chatters {
 
     private Set<Person> clientes = new HashSet<>();
     private Map<String, Set<Person>> groups = new HashMap<>();
+    private final Lock lock = new ReentrantLock();
 
     public Chatters() {
         // inicializar la lista de clientes
@@ -58,21 +61,31 @@ public class Chatters {
         }
     }
 
-    // metodo para enviar un mensaje a todos los usuarios
     public void sendToAll(String name, String message) {
-        Set<Person> allExceptSelf = new HashSet<>(clientes);
-        allExceptSelf.removeIf(p -> p.getName().equals(name));
-        for (Person p : allExceptSelf) {
-            p.getOut().println(message);
+        lock.lock(); 
+        try {
+            Set<Person> allExceptSelf = new HashSet<>(clientes);
+            allExceptSelf.removeIf(p -> p.getName().equals(name));
+            for (Person p : allExceptSelf) {
+                p.getOut().println(message);
+            }
+        } finally {
+            lock.unlock(); 
         }
     }
 
+
     // metodo para enviar un mensaje a un grupo
     public void sendToGroup(String groupName, String message) {
-        if (groups.containsKey(groupName)) {
-            for (Person p : groups.get(groupName)) {
-                p.getOut().println(message);
+        lock.lock(); 
+        try {
+            if (groups.containsKey(groupName)) {
+                for (Person p : groups.get(groupName)) {
+                    p.getOut().println(message);
+                }
             }
+        } finally {
+            lock.unlock(); 
         }
     }
 
