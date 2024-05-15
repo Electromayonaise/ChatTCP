@@ -23,19 +23,7 @@ Ahora estás en el chat global.
 8. Usa /call [nombre_usuario]  para iniciar una llamada con un usuario
 9. Usa /gcall  para unirse una llamada con el grupo actual
 10. Usa /endcall para finalizar la llamada actual
-b
-a: b
-awdawda
-a: awdawda
-aaaaaaaaaaaawda
-b: aaaaaaaaaaaawda
-awdadw
-a: awdadw
-a
-a: a
-b
-b: b
-hi
-b: hi
-hola
-a: hola
+/msg b test
+a (privado): test
+/exit
+a ha salido del chat

@@ -13,7 +13,7 @@ public class FileManager {
     private PrintWriter printWriter;
     private File file;
     private static final String FILE_NAME = "mylog.txt";
-    private static final String DIRECTORY_NAME = "../../data";
+    private static final String DIRECTORY_NAME = "/data";
 
     // Constructor privado para evitar la creación de instancias fuera de la clase
     private FileManager() {
